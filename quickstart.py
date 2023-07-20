@@ -1,10 +1,68 @@
 from __future__ import print_function
 
+import dataclasses
+import datetime
+from typing import List
+
+DEFAULT_TIME_ZONE: str = "Asia/Seoul"
+
+
+# TODO: Separate dataclasses into other files
+@dataclasses.dataclass
+class GoogleCalendarEventApi:
+    summary: str = "Event title"
+    location: str = "Location"
+    description: str = "Description about the event"
+    start_date_time: str = datetime.datetime.today().isoformat(timespec="seconds")
+    end_date_time: str = datetime.datetime.today().isoformat(timespec="seconds")
+    start_time_zone: str = DEFAULT_TIME_ZONE
+    end_time_zone: str = DEFAULT_TIME_ZONE
+    attendees: List[str] = dataclasses.field(default_factory=list)
+
+
+@dataclasses.dataclass
+class GoogleCalendarEventUrl:
+    text: str
+    date_from: str
+    date_until: str
+    stz: str
+    etz: str
+    details: str
+    location: str
+
+
+# TODO: Delete similar codes and add test code for this function
+def datetime_string_to_google_calendar_url_date_format_converter(datetime_string: str) -> str:
+    datetime_string_split = datetime_string.split('T')
+    date = datetime_string_split[0]
+    time = datetime_string_split[1]
+
+    year: str = date.split('-')[0]
+    month: str = date.split('-')[1]
+    day: str = date.split('-')[2]
+    hour: str = time.split(':')[0]
+    minute: str = time.split(':')[1]
+    second: str = time.split(':')[2]
+
+    return f"{year}{month}{day}T{hour}{minute}{second}"
+
 
 def main():
-    url: str = "https://calendar.google.com/calendar/r/eventedit?action=TEMPLATE&dates=20230720T100000Z" \
-               "%2F20230721T100000Z&stz=Asia/Seoul&etz=Asia/Seoul&details=This_is_event_created_by_link&location" \
-               "=EVENT_LOCATION_HERE&text=Event_text"
+    new_event: GoogleCalendarEventApi = GoogleCalendarEventApi()
+    # Get user input about Google Calendar event
+    print("Let's create a link for new event in Google Calendar!")
+    new_event.summary = input("Name of the event: ")
+    new_event.location = input("Location of the event: ")
+    new_event.description = input("Description of the event: ")
+    date_from = input("Date from(ex: 2023-01-01T10:00:00): ")
+    date_until = input("Date until(ex: 2023-01.02T11:00:00): ")
+    new_event.start_date_time = datetime_string_to_google_calendar_url_date_format_converter(date_from)
+    new_event.end_date_time = datetime_string_to_google_calendar_url_date_format_converter(date_until)
+
+    url: str = f"https://calendar.google.com/calendar/r/eventedit?action=TEMPLATE&dates={new_event.start_date_time}" \
+               f"%2F{new_event.end_date_time}&stz={new_event.start_time_zone}&etz={new_event.end_time_zone}&details" \
+               f"={new_event.description}&location" \
+               f"={new_event.location}&text={new_event.summary}"
     description_message: str = f'Please click the link to add an event into your Google Calendar: {url}'
     print(description_message)
 
