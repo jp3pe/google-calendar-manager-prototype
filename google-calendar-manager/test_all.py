@@ -1,0 +1,5 @@
+from test_runner import test_datetime_string_to_google_calendar_url_date_format_converter
+from test_google_calendar_event_url import test_url_generator
+
+test_datetime_string_to_google_calendar_url_date_format_converter()
+test_url_generator()

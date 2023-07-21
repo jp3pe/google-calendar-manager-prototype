@@ -22,6 +22,7 @@ def main():
     new_event.summary = input("Name of the event: ")
     new_event.location = input("Location of the event: ")
     new_event.description = input("Description of the event: ")
+    # TODO: Add function to input timezone(ex: America/Los_Angeles, Asia/Seoul)
     new_event.start_date_time = input("Date from(ex: 2023-01-01T10:00:00): ")
     new_event.end_date_time = input("Date until(ex: 2023-01.02T11:00:00): ")
 
