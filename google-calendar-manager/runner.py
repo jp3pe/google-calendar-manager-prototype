@@ -36,11 +36,8 @@ def main():
                                            location=parse.quote(new_event.location)
                                            )
 
-    url: str = f"https://calendar.google.com/calendar/r/eventedit?action=TEMPLATE&dates={new_event_url.date_from}" \
-               f"%2F{new_event_url.date_until}&stz={new_event_url.stz}&etz={new_event_url.etz}&details" \
-               f"={new_event_url.details}&location={new_event_url.location}&text={new_event_url.text}"
-    description_message: str = f'Please click the link to add an event into your Google Calendar: {url}'
-    print(description_message)
+    url: str = new_event_url.url_generator()
+    print(f'Please click the link to add an event into your Google Calendar: {url}')
 
 
 if __name__ == '__main__':
