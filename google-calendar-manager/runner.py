@@ -1,35 +1,7 @@
-from __future__ import print_function
-
-import dataclasses
-import datetime
-from typing import List
 from urllib import parse
 
-DEFAULT_TIME_ZONE: str = "Asia/Seoul"
-
-
-# TODO: Separate dataclasses into other files
-@dataclasses.dataclass
-class GoogleCalendarEventApi:
-    summary: str = "Event title"
-    location: str = "Location"
-    description: str = "Description about the event"
-    start_date_time: str = datetime.datetime.today().isoformat(timespec="seconds")
-    end_date_time: str = datetime.datetime.today().isoformat(timespec="seconds")
-    start_time_zone: str = DEFAULT_TIME_ZONE
-    end_time_zone: str = DEFAULT_TIME_ZONE
-    attendees: List[str] = dataclasses.field(default_factory=list)
-
-
-@dataclasses.dataclass
-class GoogleCalendarEventUrl:
-    text: str
-    date_from: str
-    date_until: str
-    stz: str
-    etz: str
-    details: str
-    location: str
+from google_calendar_event_api import GoogleCalendarEventApi
+from google_calendar_event_url import GoogleCalendarEventUrl
 
 
 def datetime_string_to_google_calendar_url_date_format_converter(datetime_string: str) -> str:
