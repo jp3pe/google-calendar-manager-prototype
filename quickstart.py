@@ -3,6 +3,7 @@ from __future__ import print_function
 import dataclasses
 import datetime
 from typing import List
+from urllib import parse
 
 DEFAULT_TIME_ZONE: str = "Asia/Seoul"
 
@@ -51,9 +52,9 @@ def main():
     new_event: GoogleCalendarEventApi = GoogleCalendarEventApi()
     # Get user input about Google Calendar event
     print("Let's create a link for new event in Google Calendar!")
-    new_event.summary = input("Name of the event: ")
-    new_event.location = input("Location of the event: ")
-    new_event.description = input("Description of the event: ")
+    new_event.summary = parse.quote(input("Name of the event: "))
+    new_event.location = parse.quote(input("Location of the event: "))
+    new_event.description = parse.quote(input("Description of the event: "))
     date_from = input("Date from(ex: 2023-01-01T10:00:00): ")
     date_until = input("Date until(ex: 2023-01.02T11:00:00): ")
     new_event.start_date_time = datetime_string_to_google_calendar_url_date_format_converter(date_from)
