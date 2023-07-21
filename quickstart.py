@@ -32,18 +32,13 @@ class GoogleCalendarEventUrl:
     location: str
 
 
-# TODO: Delete similar codes and add test code for this function
 def datetime_string_to_google_calendar_url_date_format_converter(datetime_string: str) -> str:
     datetime_string_split = datetime_string.split('T')
-    date = datetime_string_split[0]
-    time = datetime_string_split[1]
+    date = datetime_string_split[0].split('-')
+    time = datetime_string_split[1].split(':')
 
-    year: str = date.split('-')[0]
-    month: str = date.split('-')[1]
-    day: str = date.split('-')[2]
-    hour: str = time.split(':')[0]
-    minute: str = time.split(':')[1]
-    second: str = time.split(':')[2]
+    year, month, day = map(lambda e: e, date)
+    hour, minute, second = map(lambda e: e, time)
 
     return f"{year}{month}{day}T{hour}{minute}{second}"
 
